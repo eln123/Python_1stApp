@@ -1,3 +1,5 @@
+import random
+
 MAX_LINES = 3
 # a convention in Python,
 # is a variables in all caps
@@ -8,6 +10,65 @@ MAX_LINES = 3
 
 MAX_BET = 100
 MIN_BET = 1
+
+ROWS = 3
+COLS = 3
+
+symbol_count = {
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
+# you have 2 A's, 4 B's, 6 C's, 8 D's to choose from
+
+def get_slot_machine_spin(rows, cols, symbols):
+    # in this function, we are generating
+    # what symbols we will see in each column,
+    # based on the frequency of symbols we have 
+    # in the symbol_count dictionary 
+    all_symbols = []
+    for symbol, symbol_count in symbols.items():
+        # when you use .items(), it gives you
+        # the key and value
+        # the key is symbol, the value is symbol_count (e.g. A is key, 2 is value)
+        for _ in range(symbol_count):
+            # the underscore _ is an anonymous variable
+            # if you are looping through something
+            # and don't care about the count or iteration,
+            # you can just use this and you won't have an unused variable
+            all_symbols.append(symbol)
+            # so we are looping through symbol_count
+            # and 
+    columns = []
+    # we are going to create and append nested lists, which are rows
+
+    # now, for each column we have, we need to generate
+    # the number of rows we need
+    for _ in range(cols):
+        column = []
+        current_symbols = all_symbols[:]
+        # here, we are creating a copy with the slice operator, which is a colon
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            current_symbols.remove(value)
+            column.append(value)
+
+        columns.append(column)
+    
+    return columns
+
+def print_slot_machine(columns):
+    # transposing
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            # this gives you the index and item
+            if i  != len(columns) - 1:
+                print(column[row], end=" | ")
+            else:
+                print(column[row], end="")
+
+        print()
 
 
 
@@ -64,5 +125,10 @@ def main():
         if total_bet > balance:
             print("You do not have enough to bet that amount, your current balance is: $" + str(balance))
         else : print("You are betting $" + str(bet) + " on " + str(lines) + " lines. Total bet is equal to: $" + str(total_bet))
+
+        slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
+        print_slot_machine(slots)
+
+
 
 main()
