@@ -160,5 +160,8 @@ def main():
         winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
         print("You won $" + str(winnings) + ".")
         print("You won on lines", *winning_lines)
+        # the asterisk * is the splat operator,
+        # which passes each line in the winning_lines list,
+        # to the print function being run
 
 main()
