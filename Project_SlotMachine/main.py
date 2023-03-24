@@ -1,5 +1,10 @@
 import random
 
+# when you pick a line,
+# from 1 - 3, it goes in order from top to bottom
+# you can't pick which of the 3 horizontal lines you bet on
+# if you hit 2, that means top and middle, 1 means top, 3 means top middle and bottom lines
+
 MAX_LINES = 3
 # a convention in Python,
 # is a variables in all caps
@@ -21,6 +26,30 @@ symbol_count = {
     "D": 8
 }
 # you have 2 A's, 4 B's, 6 C's, 8 D's to choose from
+
+
+symbol_value = {
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+}
+
+
+def check_winnings(columns, lines, bet, values):
+    winnings = 0
+    winning_lines = []
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol] * bet
+            winning_lines.append(line + 1)
+  
+    return winnings, winning_lines
 
 def get_slot_machine_spin(rows, cols, symbols):
     # in this function, we are generating
@@ -128,7 +157,8 @@ def main():
 
         slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
         print_slot_machine(slots)
-
-
+        winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
+        print("You won $" + str(winnings) + ".")
+        print("You won on lines", *winning_lines)
 
 main()
