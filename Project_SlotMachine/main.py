@@ -142,7 +142,7 @@ def get_bet():
             print("Please enter a number")
     return amount
 
-def main():
+def spin(balance):
     # this is our program
     # when we run main, we are running the program
     balance = deposit()
@@ -163,5 +163,18 @@ def main():
         # the asterisk * is the splat operator,
         # which passes each line in the winning_lines list,
         # to the print function being run
+        return winnings - total_bet
+
+def main():
+    balance = deposit()
+    while True:
+        print("Current balance is $" + str(balance))
+        answer = input("Press enter to play (q to quit).")
+        if answer == 'q':
+            break
+        balance += spin(balance)
+
+    print("You left with $" + str(balance))
+
 
 main()
